@@ -1,0 +1,50 @@
+cabal-version: 2.4
+name: streamly-zstd
+version: 0.1.0
+license: NONE
+license-file: LICENSE
+extra-source-files: README.md CHANGELOG.md
+author: Renzo Carbonara
+maintainer: renλren.zone
+copyright: Renzo Carbonara, 2021
+category: Money
+build-type: Simple
+synopsis: Streaming ZSTD compression and decompression through Streamly
+description:
+  Streaming [zstd](https://github.com/facebook/zstd)
+  compression and decompression through
+  [streamly](https://github.com/composewell/streamly).
+homepage: https://github.com/k0001/hs-streamly-zstd
+bug-reports: https://gitlab.com/k0001/hs-streamly-zstd
+tested-with: GHC==9.4.5
+
+common basic
+  default-language: GHC2021
+  ghc-options: -O2 -Wall
+  build-depends:
+    base ==4.*,
+    streamly-core,
+  default-extensions:
+    DerivingStrategies
+    DeriveAnyClass
+    LambdaCase
+
+library
+  import: basic
+  hs-source-dirs: lib
+  build-depends:
+    bytestring,
+    exceptions,
+    zstd,
+  exposed-modules:
+    Streamly.Zstd
+
+test-suite test
+  import: basic
+  default-language: GHC2021
+  ghc-options: -threaded -with-rtsopts=-N
+  type: exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is: Main.hs
+  build-depends:
+    streamly-zstd
